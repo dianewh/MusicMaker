@@ -1,0 +1,2 @@
+chewbacca noise:
+uri: "http://www.slspencer.com/Sounds/Chewbacca/Chewie3.mp3" 
