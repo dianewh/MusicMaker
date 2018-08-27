@@ -11,12 +11,42 @@ export class Player extends React.Component {
     }
   }
 
+  renderRecordingButton(){
+    
+    if(this.props.recordingMode) {
+      return(
+        <Button 
+            title="pause"
+            onPress={this.props.recordSong}
+          />  
+      )
+    } else {
+      return(
+        <Button 
+            title="play"
+            onPress={this.props.recordSong}
+          />  
+      )
+    }
+  
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text>Record</Text>
-        <Text>Stop</Text>
-        <Text>Save</Text>
+        {this.renderRecordingButton()}
+        <Button 
+            title="Record"
+            onPress={this.props.recordSong}
+        />
+        <Button 
+            title="Save Song"
+            onPress={this.props.recordSong}
+        />
+        <Button 
+            title="Replay Saved Song"
+            onPress={this.props.recordSong}
+        />      
       </View>
     );
   }
@@ -25,7 +55,9 @@ export class Player extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
   },

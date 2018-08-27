@@ -13,7 +13,11 @@ export class Piano extends React.Component {
     return (
       <View style={styles.container}>
         {this.props.notes.map((note)=>
-          <Key key={note.name} note={note}/>
+          <Key 
+            key={note.name} 
+            
+            note={note}
+          />
         )}
       </View>
     );

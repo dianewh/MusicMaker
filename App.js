@@ -25,7 +25,11 @@ export default class App extends React.Component {
         {name: "c2", src: "https://s3.amazonaws.com/dianewhmusicmaker/pianosounds/c2.mp3"},
       ],
       ocarinaNotes: [],
+      pressedNote: {},
+      savedSong: [],
+      recordingMode: false,
     }
+    this.recordSong = this.recordSong.bind(this);
   }
 
   componentDidMount() {
@@ -42,16 +46,43 @@ export default class App extends React.Component {
   //   });
   }
 
+  registerPressedNote(note) {
+    this.setState({
+      pressednote
+    })
+  }
+
+  recordNote(note) {
+
+    this.prevState({
+      note,
+    })
+  }
+
+  recordSong(){
+    this.setState({
+      recordingMode: !this.state.recordingMode
+    })
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.header}>Instrument of Choice: Piano </Text>
-        <Piano style={styles.instrument} notes={this.state.pianoNotes}/>
-        <Player style={styles.player}/>  
+        <Piano 
+          style={styles.instrument} 
+          notes={this.state.pianoNotes}
+        />
+        <Player 
+          style={styles.player}
+          recordingMode={this.state.recordingMode} 
+          recordSong={this.recordSong}
+        />  
       </View>
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -63,6 +94,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flex: 1,
+    maxWidth: 'auto',
     backgroundColor: 'powderblue',
     alignItems: 'center',
     justifyContent: 'center',
