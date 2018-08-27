@@ -41,7 +41,7 @@ export class Player extends React.Component {
           {this.renderRecordingButton()}
           <Button 
               title="Clear Memory"
-              onPress={()=>{}}
+              onPress={this.props.clearMemory}
           />
           <Button 
               title="Save Song to Database"

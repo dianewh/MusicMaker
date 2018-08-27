@@ -26,11 +26,12 @@ export default class App extends React.Component {
       ],
       ocarinaNotes: [],
       pressedNote: {},
-      savedSong: [{name: "c1", src: "https://s3.amazonaws.com/dianewhmusicmaker/pianosounds/c1.mp3"},],
+      savedSong: [],
       recordingMode: false,
     }
     this.toggleRecordingMode = this.toggleRecordingMode.bind(this);
     this.recordNote = this.recordNote.bind(this);
+    this.clearMemory = this.clearMemory.bind(this);
 
   }
 
@@ -65,6 +66,13 @@ export default class App extends React.Component {
 
   }
 
+  clearMemory() {
+    this.setState({ 
+      savedSong: [],
+      recordingMode: false,
+    });
+  }
+
   toggleRecordingMode(){
     this.setState({
       recordingMode: !this.state.recordingMode
@@ -87,19 +95,20 @@ export default class App extends React.Component {
         <View style={styles.header}>
           <Text style={styles.title}>Instrument of Choice: Piano </Text>
         </View>
+        <View style={styles.currentSong}>
+          {this.renderCurrentSong()}
+        </View>
         <Piano 
           style={styles.instrument} 
           notes={this.state.pianoNotes}
           recordNote={this.recordNote}
         />
-        <View style={styles.currentSong}>
-          {this.renderCurrentSong()}
-        </View>
         <Player 
           currentSong={this.state.savedSong}
           style={styles.player}
           recordingMode={this.state.recordingMode} 
           toggleRecordingMode={this.toggleRecordingMode}
+          clearMemory={this.clearMemory}
         />  
       </View>
     );
@@ -121,16 +130,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   header: {
-    display: 'flex',
-    flexDirection: 'column',
     flex: 1,
     width: '100%',
     backgroundColor: 'powderblue',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  instrument: {
+    flex: 2,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
   title: {
-    flex: 1,
     fontSize: 20,
     fontWeight: 'bold',
     color: 'green',
@@ -144,13 +157,10 @@ const styles = StyleSheet.create({
   },
   note: {
     flex: 1,
+    height: 20,
+    flexWrap: 'wrap',
   },
-  instrument: {
-    flex: 2,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+
   player: {
     flex: 3,
     width: '100%',
