@@ -26,7 +26,7 @@ export default class App extends React.Component {
       ],
       ocarinaNotes: [],
       pressedNote: {},
-      savedSong: [],
+      savedSong: [{name: "c1", src: "https://s3.amazonaws.com/dianewhmusicmaker/pianosounds/c1.mp3"},],
       recordingMode: false,
     }
     this.toggleRecordingMode = this.toggleRecordingMode.bind(this);
@@ -47,6 +47,7 @@ export default class App extends React.Component {
   //     }
   //   });
   }
+ 
 
   registerPressedNote(note) {
     this.setState({
@@ -55,12 +56,13 @@ export default class App extends React.Component {
   }
 
   recordNote(note) {
-    this.setState(prevState => {
-      const updatedSong = prevState.savedSong.push(note)
-      return ({
-        savedSong: updatedSong,
-      });
-    });
+    if(this.state.recordingMode) {
+      let updateSong = [...this.state.savedSong, note];
+      // this.setState( ({savedSong}) => ({ savedSongs: [...savedSong, note]}));
+      // this.setState({ savedSong: [{name: "c2", src: "https://s3.amazonaws.com/dianewhmusicmaker/pianosounds/c2.mp3"}]});
+      this.setState({ savedSong: updateSong});
+    }
+
   }
 
   toggleRecordingMode(){
@@ -72,8 +74,8 @@ export default class App extends React.Component {
   renderCurrentSong(){
     if (this.state.savedSong.length) {
       return(
-        this.state.savedSong.map((note)=>
-          <Text key={note.name} >{note.name}</Text>
+        this.state.savedSong.map((note, index)=>
+          <Text style={styles.note} key={note.name + index} >{note.name}</Text>
         )
       )
     }
@@ -82,14 +84,19 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>Instrument of Choice: Piano </Text>
+        <View style={styles.header}>
+          <Text style={styles.title}>Instrument of Choice: Piano </Text>
+        </View>
         <Piano 
           style={styles.instrument} 
           notes={this.state.pianoNotes}
           recordNote={this.recordNote}
         />
-        {this.renderCurrentSong()}
+        <View style={styles.currentSong}>
+          {this.renderCurrentSong()}
+        </View>
         <Player 
+          currentSong={this.state.savedSong}
           style={styles.player}
           recordingMode={this.state.recordingMode} 
           toggleRecordingMode={this.toggleRecordingMode}
@@ -99,6 +106,11 @@ export default class App extends React.Component {
   }
 }
 
+/* <View style={styles.currentSong}>
+            {this.state.savedSong.map((note, index)=>{
+              <Text style={styles.note} key={note.name + index.toString()}>currentSong: {note.name} </Text>
+            })}
+          </View> */
 
 const styles = StyleSheet.create({
   container: {
@@ -109,16 +121,29 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   header: {
+    display: 'flex',
+    flexDirection: 'column',
     flex: 1,
     width: '100%',
+    backgroundColor: 'powderblue',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    flex: 1,
     fontSize: 20,
     fontWeight: 'bold',
     color: 'green',
     textAlign: 'center',
     textAlignVertical: 'center',
-    backgroundColor: 'powderblue',
-    alignItems: 'center',
-    justifyContent: 'center',
+  },
+  currentSong: {
+    display: 'flex',
+    flex: 3,
+    flexDirection: 'row',
+  },
+  note: {
+    flex: 1,
   },
   instrument: {
     flex: 2,

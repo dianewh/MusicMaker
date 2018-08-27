@@ -34,19 +34,24 @@ export class Player extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        {this.renderRecordingButton()}
-        <Button 
-            title="Clear Memory"
-            onPress={()=>{}}
-        />
-        <Button 
-            title="Save Song to Database"
-            onPress={()=>{}}
-        />
-        <Button 
-            title="Replay Saved Song"
-            onPress={()=>{}}
-        />      
+        
+          
+        
+        <View style={styles.player}>
+          {this.renderRecordingButton()}
+          <Button 
+              title="Clear Memory"
+              onPress={()=>{}}
+          />
+          <Button 
+              title="Save Song to Database"
+              onPress={()=>{}}
+          />
+          <Button 
+              title="Replay Saved Song"
+              onPress={()=>{}}
+          />      
+        </View>
       </View>
     );
   }
@@ -55,11 +60,25 @@ export class Player extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'column',
     width: '100%',
-    justifyContent: 'space-evenly',
+    
     backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  currentSong: {
+    flex: 1,
+  },
+  player: {
+    flex: 2,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  }
 });
+
+// {this.props.currentSong.map((note) => {
+//   <Text style={styles.currentSong}>
+//     {note.name}
+//   </Text>
+// })}

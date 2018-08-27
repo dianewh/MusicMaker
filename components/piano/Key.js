@@ -26,7 +26,7 @@ export class Key extends React.Component {
 
   pressKey(e) {
     this.playSound(e);
-    this.props.recordNote();
+    this.props.recordNote(this.props.note);
   }
 
   render() {
@@ -34,7 +34,7 @@ export class Key extends React.Component {
       <View style={styles.container}>
         <TouchableNativeFeedback 
           style={styles.key}
-          onPress={this.playSound}
+          onPress={this.pressKey.bind(this)}
           background={TouchableNativeFeedback.SelectableBackground()}>
           <View>
             <Text style={{margin: 30}}>Key</Text>
