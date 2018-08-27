@@ -14,8 +14,9 @@ export class Piano extends React.Component {
       <View style={styles.container}>
         {this.props.notes.map((note)=>
           <Key 
+            styles={styles.key}
             key={note.name} 
-            
+            recordNote={this.props.recordNote}
             note={note}
           />
         )}
@@ -28,13 +29,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#fff',
+    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
   },
   key: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
   }

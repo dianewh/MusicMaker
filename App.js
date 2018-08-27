@@ -29,7 +29,9 @@ export default class App extends React.Component {
       savedSong: [],
       recordingMode: false,
     }
-    this.recordSong = this.recordSong.bind(this);
+    this.toggleRecordingMode = this.toggleRecordingMode.bind(this);
+    this.recordNote = this.recordNote.bind(this);
+
   }
 
   componentDidMount() {
@@ -48,21 +50,33 @@ export default class App extends React.Component {
 
   registerPressedNote(note) {
     this.setState({
-      pressednote
+      pressednote: note
     })
   }
 
   recordNote(note) {
-
-    this.prevState({
-      note,
-    })
+    this.setState(prevState => {
+      const updatedSong = prevState.savedSong.push(note)
+      return ({
+        savedSong: updatedSong,
+      });
+    });
   }
 
-  recordSong(){
+  toggleRecordingMode(){
     this.setState({
       recordingMode: !this.state.recordingMode
     })
+  }
+
+  renderCurrentSong(){
+    if (this.state.savedSong.length) {
+      return(
+        this.state.savedSong.map((note)=>
+          <Text key={note.name} >{note.name}</Text>
+        )
+      )
+    }
   }
 
   render() {
@@ -72,11 +86,13 @@ export default class App extends React.Component {
         <Piano 
           style={styles.instrument} 
           notes={this.state.pianoNotes}
+          recordNote={this.recordNote}
         />
+        {this.renderCurrentSong()}
         <Player 
           style={styles.player}
           recordingMode={this.state.recordingMode} 
-          recordSong={this.recordSong}
+          toggleRecordingMode={this.toggleRecordingMode}
         />  
       </View>
     );
@@ -94,7 +110,12 @@ const styles = StyleSheet.create({
   },
   header: {
     flex: 1,
-    maxWidth: 'auto',
+    width: '100%',
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'green',
+    textAlign: 'center',
+    textAlignVertical: 'center',
     backgroundColor: 'powderblue',
     alignItems: 'center',
     justifyContent: 'center',
@@ -107,6 +128,7 @@ const styles = StyleSheet.create({
   },
   player: {
     flex: 3,
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
   },

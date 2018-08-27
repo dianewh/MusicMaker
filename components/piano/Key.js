@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, Button, View } from 'react-native';
+import { StyleSheet, TouchableHighlight, TouchableNativeFeedback, Text, Button, View } from 'react-native';
 import { Constants, Audio } from 'expo';
 
 export class Key extends React.Component {
@@ -24,14 +24,22 @@ export class Key extends React.Component {
     }
   }
 
+  pressKey(e) {
+    this.playSound(e);
+    this.props.recordNote();
+  }
 
   render() {
     return (
       <View style={styles.container}>
-        <Button 
-          title={this.props.note.name}
+        <TouchableNativeFeedback 
+          style={styles.key}
           onPress={this.playSound}
-        />
+          background={TouchableNativeFeedback.SelectableBackground()}>
+          <View>
+            <Text style={{margin: 30}}>Key</Text>
+          </View>
+        </TouchableNativeFeedback>
       </View>
     );
   }
@@ -40,8 +48,26 @@ export class Key extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'pink',
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 1,
+    borderRadius: 5,
+    
   },
+  key: {
+    height: '100%',
+    width: '100%',
+    padding: 35,
+  }
+
 });
+
+// {
+//   <TouchableHighlight style={styles.key} onPress={this.playSound} underlayColor="white">
+//           <View>
+//             <Text>{this.props.note.name}</Text>
+//           </View>
+//         </TouchableHighlight>
+// {width: 150, height: 100, backgroundColor: 'pink'}
+// }

@@ -16,15 +16,15 @@ export class Player extends React.Component {
     if(this.props.recordingMode) {
       return(
         <Button 
-            title="pause"
-            onPress={this.props.recordSong}
+            title="stop recording"
+            onPress={this.props.toggleRecordingMode}
           />  
       )
     } else {
       return(
         <Button 
-            title="play"
-            onPress={this.props.recordSong}
+            title="record"
+            onPress={this.props.toggleRecordingMode}
           />  
       )
     }
@@ -36,16 +36,16 @@ export class Player extends React.Component {
       <View style={styles.container}>
         {this.renderRecordingButton()}
         <Button 
-            title="Record"
-            onPress={this.props.recordSong}
+            title="Clear Memory"
+            onPress={()=>{}}
         />
         <Button 
-            title="Save Song"
-            onPress={this.props.recordSong}
+            title="Save Song to Database"
+            onPress={()=>{}}
         />
         <Button 
             title="Replay Saved Song"
-            onPress={this.props.recordSong}
+            onPress={()=>{}}
         />      
       </View>
     );
@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
+    width: '100%',
     justifyContent: 'space-evenly',
     backgroundColor: 'black',
     alignItems: 'center',
