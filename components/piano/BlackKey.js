@@ -29,7 +29,6 @@ export class BlackKey extends React.Component {
   pressKey(e) {
     this.playSound(e);
     this.props.recordNote(this.props.note);
-    console.log("clickedKey")
   }
 
   render() {
