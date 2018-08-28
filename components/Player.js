@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { Constants, Audio } from 'expo';
 
 export class Player extends React.Component {
@@ -19,13 +18,6 @@ export class Player extends React.Component {
         <Button 
             buttonStyle={styles.stopbutton}
             onPress={this.props.toggleRecordingMode}
-            icon={
-              <Icon
-                name='arrow-right'
-                size={15}
-                color='white'
-              />
-            }
           />  
       )
     } else {
@@ -45,20 +37,20 @@ export class Player extends React.Component {
         <Button 
           titleStyle={styles.title}
           buttonStyle={styles.button}
-          title="Clear Memory"
+          title="Clear"
           onPress={this.props.clearMemory}
         />
         <Button
           titleStyle={styles.title}
           buttonStyle={styles.button}
           title="Save Song"
-          onPress={()=>{}}
+          onPress={this.props.saveSong}
         />
         <Button
           titleStyle={styles.title}
           buttonStyle={styles.button}
           title="Show Saved Song"
-          onPress={()=>{}}
+          onPress={this.props.showSavedSong}
         />      
       </View>
     );

@@ -10,8 +10,6 @@ export class WhiteKey extends React.Component {
   }
 
   async playSound(e) {
-    console.log("sound played");
-    
     const source = {
       uri: this.props.note.src
     };
@@ -29,7 +27,6 @@ export class WhiteKey extends React.Component {
   pressKey(e) {
     this.playSound(e);
     this.props.recordNote(this.props.note);
-    console.log("clickedKey")
   }
 
   render() {

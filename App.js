@@ -27,12 +27,15 @@ export default class App extends React.Component {
       ],
       ocarinaNotes: [],
       pressedNote: {},
+      currentSong: [],
       savedSong: [],
       recordingMode: false,
     }
     this.toggleRecordingMode = this.toggleRecordingMode.bind(this);
     this.recordNote = this.recordNote.bind(this);
     this.clearMemory = this.clearMemory.bind(this);
+    this.saveSong = this.saveSong.bind(this);
+    this.showSavedSong = this.showSavedSong.bind(this);
   }
 
   componentDidMount() {
@@ -55,46 +58,57 @@ export default class App extends React.Component {
     })
   }
 
-  recordNote(note) {
-    if(this.state.recordingMode) {
-      let updateSong = [...this.state.savedSong, note];
-      // this.setState( ({savedSong}) => ({ savedSongs: [...savedSong, note]}));
-      // this.setState({ savedSong: [{name: "c2", src: "https://s3.amazonaws.com/dianewhmusicmaker/pianosounds/c2.mp3"}]});
-      this.setState({ savedSong: updateSong});
-    }
-  }
-
-  clearMemory() {
-    this.setState({ 
-      savedSong: [],
-      recordingMode: false,
-    });
-  }
-
   toggleRecordingMode(){
     this.setState({
       recordingMode: !this.state.recordingMode
     })
   }
 
+  recordNote(note) {
+    if(this.state.recordingMode) {
+      let updateSong = [...this.state.currentSong, note];
+      this.setState({ currentSong: updateSong});
+    }
+  }
+
+  clearMemory() {
+    this.setState({ 
+      currentSong: [],
+      recordingMode: false,
+    });
+  }
+
+  saveSong() {
+    if(this.state.currentSong.length) {
+      this.setState({ savedSong: this.state.currentSong});
+    }
+  }
+
+  showSavedSong() {
+    if(this.state.recordingMode) {
+      this.setState({ currentSong: this.state.savedSong});
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.title}>Instrument of Choice: Piano </Text>
+          <Text style={styles.title}>Instrument: Piano </Text>
         </View>
         <Piano 
           style={styles.instrument} 
           notes={this.state.pianoNotes}
           recordNote={this.recordNote}
         />
-        <CurrentSong style={styles.currentSong} currentSong={this.state.savedSong}/>
+        <CurrentSong style={styles.currentSong} currentSong={this.state.currentSong}/>
         <Player 
-          currentSong={this.state.savedSong}
           style={styles.player}
           recordingMode={this.state.recordingMode} 
           toggleRecordingMode={this.toggleRecordingMode}
           clearMemory={this.clearMemory}
+          saveSong={this.saveSong}
+          showSavedSong={this.showSavedSong}
         />  
       </View>
     );
@@ -109,6 +123,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
   header: {
     flex: 1,
     width: '100%',
@@ -117,8 +132,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 24,
+    fontFamily: 'Roboto',
+    fontWeight: '700',
     color: 'green',
     textAlign: 'center',
     textAlignVertical: 'center',
