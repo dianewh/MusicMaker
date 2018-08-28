@@ -3,6 +3,7 @@ import { StyleSheet, Text, Button, View } from 'react-native';
 import { Constants, Audio } from 'expo';
 import {Piano} from './components/piano/Piano.js';
 import {Player} from './components/Player.js';
+import {CurrentSong} from './components/CurrentSong.js';
 
 export default class App extends React.Component {
 
@@ -63,7 +64,6 @@ export default class App extends React.Component {
       // this.setState({ savedSong: [{name: "c2", src: "https://s3.amazonaws.com/dianewhmusicmaker/pianosounds/c2.mp3"}]});
       this.setState({ savedSong: updateSong});
     }
-
   }
 
   clearMemory() {
@@ -79,30 +79,18 @@ export default class App extends React.Component {
     })
   }
 
-  renderCurrentSong(){
-    if (this.state.savedSong.length) {
-      return(
-        this.state.savedSong.map((note, index)=>
-          <Text style={styles.note} key={note.name + index} >{note.name}</Text>
-        )
-      )
-    }
-  }
-
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.title}>Instrument of Choice: Piano </Text>
         </View>
-        <View style={styles.currentSong}>
-          {this.renderCurrentSong()}
-        </View>
         <Piano 
           style={styles.instrument} 
           notes={this.state.pianoNotes}
           recordNote={this.recordNote}
         />
+        <CurrentSong style={styles.currentSong} currentSong={this.state.savedSong}/>
         <Player 
           currentSong={this.state.savedSong}
           style={styles.player}
@@ -114,12 +102,6 @@ export default class App extends React.Component {
     );
   }
 }
-
-/* <View style={styles.currentSong}>
-            {this.state.savedSong.map((note, index)=>{
-              <Text style={styles.note} key={note.name + index.toString()}>currentSong: {note.name} </Text>
-            })}
-          </View> */
 
 const styles = StyleSheet.create({
   container: {
@@ -136,13 +118,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  instrument: {
-    flex: 2,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
   title: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -150,19 +125,24 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
   },
-  currentSong: {
-    display: 'flex',
-    flex: 3,
-    flexDirection: 'row',
+  
+  instrument: {
+    flex: 2,
+    height: 50,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  note: {
-    flex: 1,
-    height: 20,
-    flexWrap: 'wrap',
+
+  currentSong: {
+    flex: 3,
+    height: 10,
+    padding: 5,
+    backgroundColor: 'grey',
   },
 
   player: {
-    flex: 3,
+    flex: 4,
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',

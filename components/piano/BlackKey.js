@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, TouchableHighlight, TouchableNativeFeedback, Text, Button, View } from 'react-native';
 import { Constants, Audio } from 'expo';
 
-export class Key extends React.Component {
+export class BlackKey extends React.Component {
 
   constructor(props) {
     super(props);
@@ -10,11 +10,13 @@ export class Key extends React.Component {
   }
 
   async playSound(e) {
+    
+    
     const source = {
       uri: this.props.note.src
     };
-    
     try {
+      console.log("sound played");
       await Audio.setIsEnabledAsync(true);
       const sound = new Audio.Sound();
       await sound.loadAsync(source);
@@ -27,6 +29,7 @@ export class Key extends React.Component {
   pressKey(e) {
     this.playSound(e);
     this.props.recordNote(this.props.note);
+    console.log("clickedKey")
   }
 
   render() {
@@ -48,12 +51,13 @@ export class Key extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'pink',
+    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    borderRadius: 5,
-    
+    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 20,
+    padding: 5,
   },
   key: {
     height: '100%',

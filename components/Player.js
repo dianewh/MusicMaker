@@ -1,5 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, Button, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { Button } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { Constants, Audio } from 'expo';
 
 export class Player extends React.Component {
@@ -12,73 +14,85 @@ export class Player extends React.Component {
   }
 
   renderRecordingButton(){
-    
     if(this.props.recordingMode) {
       return(
         <Button 
-            title="stop recording"
+            buttonStyle={styles.stopbutton}
             onPress={this.props.toggleRecordingMode}
+            icon={
+              <Icon
+                name='arrow-right'
+                size={15}
+                color='white'
+              />
+            }
           />  
       )
     } else {
       return(
         <Button 
-            title="record"
+            buttonStyle={styles.recordbutton}
             onPress={this.props.toggleRecordingMode}
           />  
       )
     }
-  
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        
-          
-        
-        <View style={styles.player}>
-          {this.renderRecordingButton()}
-          <Button 
-              title="Clear Memory"
-              onPress={this.props.clearMemory}
-          />
-          <Button 
-              title="Save Song to Database"
-              onPress={()=>{}}
-          />
-          <Button 
-              title="Replay Saved Song"
-              onPress={()=>{}}
-          />      
-        </View>
+      <View style={styles.player}>
+        {this.renderRecordingButton()}
+        <Button 
+          titleStyle={styles.title}
+          buttonStyle={styles.button}
+          title="Clear Memory"
+          onPress={this.props.clearMemory}
+        />
+        <Button
+          titleStyle={styles.title}
+          buttonStyle={styles.button}
+          title="Save Song"
+          onPress={()=>{}}
+        />
+        <Button
+          titleStyle={styles.title}
+          buttonStyle={styles.button}
+          title="Show Saved Song"
+          onPress={()=>{}}
+        />      
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  player: {
     flex: 1,
-    flexDirection: 'column',
     width: '100%',
-    
-    backgroundColor: 'black',
+    backgroundColor: 'grey',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  currentSong: {
-    flex: 1,
-  },
-  player: {
-    flex: 2,
+    padding: 10,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
+  },
+  text: { 
+    fontWeight: "700" 
+  },
+  button: {
+    backgroundColor: 'lightseagreen',
+    borderRadius: 10,
+  },
+  recordbutton: {
+    backgroundColor: 'red',
+    width: 25,
+    height: 25,
+    borderRadius: 50,
+  },
+  stopbutton: {
+    backgroundColor: '#ff0000',
+    width: 25,
+    height: 25,
+    borderRadius: 1,
   }
 });
-
-// {this.props.currentSong.map((note) => {
-//   <Text style={styles.currentSong}>
-//     {note.name}
-//   </Text>
-// })}
