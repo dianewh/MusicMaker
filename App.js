@@ -59,8 +59,8 @@ export default class App extends React.Component {
   }
 
   toggleRecordingMode(){
-    this.setState({
-      recordingMode: !this.state.recordingMode
+    this.setState( prevState => {
+      recordingMode: !prevState.recordingMode
     })
   }
 
@@ -80,13 +80,13 @@ export default class App extends React.Component {
 
   saveSong() {
     if(this.state.currentSong.length) {
-      this.setState({ savedSong: this.state.currentSong});
+      this.setState(prevState => { savedSong: prevState.currentSong});
     }
   }
 
   showSavedSong() {
     if(this.state.recordingMode) {
-      this.setState({ currentSong: this.state.savedSong});
+      this.setState(prevState => { currentSong: prevState.savedSong});
     }
   }
 
